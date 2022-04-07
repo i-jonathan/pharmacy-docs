@@ -56,11 +56,71 @@ paths:
                     description: Expiry time of Token
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: Log a user out
+      description: Invalidate User Token and prevent reuse
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Logged out
+          content: {}
+        401:
+          description: Authentication Failed
+          content: {}
+      # TODO check security
 
-
+  /account:
+    post:
+      tags:
+        - account
+      summary: Create a new User account
+      description: Submit user details for sign up
+      requestBody:
+        description: content for user signup
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/PostAccount'
+        required: true
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
     Auth:
       type: object
       properties:
