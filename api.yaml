@@ -1,0 +1,102 @@
+openapi: '3.0'
+info:
+  title: Pharmacy API Docs
+  description: API documentation for a yet to be build pharmacy
+  contact:
+    email: farinloyejonathan@gmail.com
+  version: "0.1"
+
+servers:
+  - url: http://localhost:7000/v1
+
+tags:
+  - name: auth
+    description: Operations with regards to Authentication
+  - name: account
+    description: Operations with regards to User accounts
+  - name: inventory
+    description: Group of stuff for inventory
+  - name: category
+    description: Operations for category. 
+  - name: sales
+    description: operations dealing with sales or so.
+  - name: reports
+    description: Endpoints for fetching reports
+
+paths:
+  # Authorization Paths
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Log a user in
+      requestBody:
+        description: User object that needs to be logged in
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth'
+        required: true
+      responses:
+        200:
+          description: Token Object to be stored in httpOnly cookie?
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Auth Type
+                  value:
+                    type: string
+                    description: Token of Authenticated User
+                  expiry:
+                    type: string
+                    description: Expiry time of Token
+        401:
+          description: Unauthorized
+
+
+
+components:
+  schemas:
+    Auth:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_name:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        slug:
+          type: string
+        is_active:
+          type: boolean
+
+    PostAccount:
+      type: object
+      properties:
+        user_name:
+          type: string 
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
