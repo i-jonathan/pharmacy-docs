@@ -116,6 +116,121 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+    get:
+      tags: 
+        - account
+      summary: Get all accounts. 
+      description: Get all accounts. Admin endpoint
+      security:
+        - token: []
+      response:
+        200:
+          description: OK
+          content:
+            application/json:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /account/{slug}:
+    get:
+      tags:
+        - account
+      summary: Get account by slug
+      description: Fetch single account by ID. Admin Endpoint
+      security:
+        - token: []
+      parameters:
+        - name: slug
+          in: path
+          description: slug of User to fetch
+          required: true
+          schema:
+            type: string
+      response:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - account
+      summary: Update a User account
+      description: Adjust User Account
+      security:
+        - token: []
+      requestBody:
+        description: content for updating user
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/PostAccount'
+        required: true
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 components:
   schemas:
     ErrorResponse:
