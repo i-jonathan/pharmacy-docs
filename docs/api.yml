@@ -29,7 +29,8 @@ paths:
     post:
       tags:
         - auth
-      summary: Log a user in
+      summary: Login
+      description: Log a User in
       requestBody:
         description: User object that needs to be logged in
         content:
@@ -64,7 +65,7 @@ paths:
     post:
       tags:
         - auth
-      summary: Log a user out
+      summary: Logout
       description: Invalidate User Token and prevent reuse
       parameters:
         - name: Authorization
@@ -79,7 +80,8 @@ paths:
         401:
           description: Authentication Failed
           content: {}
-      # TODO check security
+      security:
+        - token: []
 
   /account:
     post:
@@ -128,6 +130,7 @@ components:
           type: string
         password:
           type: string
+          format: password
     User:
       type: object
       properties:
@@ -159,4 +162,13 @@ components:
           type: string
         password:
           type: string
+          format: password
+
+  securitySchemes:
+    token:
+      name: Token
+      description: JWT Token for authentication
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 
