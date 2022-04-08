@@ -1,7 +1,7 @@
 openapi: '3.0'
 info:
   title: Pharmacy API Docs
-  description: API documentation for a yet to be build pharmacy
+  description: API documentation for a yet to be built pharmacy
   contact:
     email: farinloyejonathan@gmail.com
   version: "0.1"
