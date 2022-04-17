@@ -1,4 +1,4 @@
-openapi: '3.0'
+openapi: "3.1.0"
 info:
   title: Pharmacy API Docs
   description: API documentation for a yet to be built pharmacy
@@ -17,7 +17,7 @@ tags:
   - name: inventory
     description: Group of stuff for inventory
   - name: category
-    description: Operations for category. 
+    description: Operations for category.
   - name: sales
     description: operations dealing with sales or so.
   - name: reports
@@ -36,7 +36,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Auth'
+              $ref: "#/components/schemas/Auth"
         required: true
       responses:
         200:
@@ -60,7 +60,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /auth/logout:
     post:
       tags:
@@ -93,8 +93,8 @@ paths:
         description: content for user signup
         content:
           application/json:
-            schema: 
-              $ref: '#/components/schemas/PostAccount'
+            schema:
+              $ref: "#/components/schemas/PostAccount"
         required: true
       responses:
         200:
@@ -102,24 +102,24 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         400:
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     get:
-      tags: 
+      tags:
         - account
-      summary: Get all accounts. 
+      summary: Get all accounts.
       description: Get all accounts. Admin endpoint
       security:
         - token: []
@@ -130,29 +130,28 @@ paths:
             application/json:
               type: array
               items:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /account/{slug}:
-   
     parameters:
-    - name: slug
-      in: path
-      description: slug of User to fetch
-      required: true
-      schema:
-        type: string
+      - name: slug
+        in: path
+        description: slug of User to fetch
+        required: true
+        schema:
+          type: string
     get:
       tags:
         - account
@@ -166,25 +165,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: User Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     put:
       tags:
@@ -197,8 +196,8 @@ paths:
         description: content for updating user
         content:
           application/json:
-            schema: 
-              $ref: '#/components/schemas/PostAccount'
+            schema:
+              $ref: "#/components/schemas/PostAccount"
         required: true
       responses:
         200:
@@ -206,31 +205,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         400:
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: User Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     delete:
       tags:
@@ -247,26 +246,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: User Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
+                $ref: "#/components/schemas/ErrorResponse"
 
 components:
   schemas:
@@ -305,7 +303,7 @@ components:
       type: object
       properties:
         user_name:
-          type: string 
+          type: string
         first_name:
           type: string
         last_name:
@@ -323,4 +321,3 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-

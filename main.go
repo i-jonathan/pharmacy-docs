@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
 	"net/http"
 	"os"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -12,6 +13,7 @@ func main() {
 	router.PathPrefix("/").Handler(http.StripPrefix("/", rapidoc))
 
 	port := os.Getenv("PORT")
+	// port := "7000"
 
 	_ = http.ListenAndServe(":"+port, router)
 }
