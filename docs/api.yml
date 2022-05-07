@@ -61,6 +61,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  
   /auth/logout:
     post:
       tags:
@@ -310,7 +311,6 @@ components:
           type: string
         role:
           $ref: "#/components/schemas/Role"
-        
 
     PostAccount:
       type: object
