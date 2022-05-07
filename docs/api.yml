@@ -24,6 +24,8 @@ tags:
     description: Supplier yada yada
   - name: order
     description: You know what this is sha
+  - name: payment-method
+    description: this again?
   - name: sales
     description: operations dealing with sales or so.
   - name: reports
@@ -930,6 +932,174 @@ paths:
         - order
       description: Delete a order
       summary: Delete a order with specified slug
+      responses:
+        204:
+          description: Deleted Successfully
+        401:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # Payment method endpoints
+  /payment-method:
+    post:
+      tags:
+        - payment-method
+      summary: Create a new payment-method
+      description: Submit payment-method details for creation
+      security:
+        - token: []
+      requestBody:
+        description: Body for payment-method creation
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentMethod"
+        required: true
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentMethod"
+        400:
+          description:  Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    get:
+      tags:
+        - payment-method
+      summary: Get all PaymentMethods
+      description: Fetch all PaymentMethods
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentMethod"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+  /payment-method/{slug}:
+    parameters:
+      - name: slug
+        in: path
+        description: slug of payment-method to be interacted with
+        required: true
+        schema:
+          type: string
+    
+    get:
+      tags:
+        - payment-method
+      description: Get payment-method by slug
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentMethod"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    put:
+      tags:
+        - payment-method
+      description: Update a payment-method
+      requestBody:
+        description: Content to update payment-method with
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentMethod"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentMethod"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    delete:
+      tags:
+        - payment-method
+      description: Delete a payment-method
+      summary: Delete a payment-method with specified slug
       responses:
         204:
           description: Deleted Successfully
