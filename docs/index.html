@@ -3,6 +3,12 @@
 <head>
     <meta charset="utf-8">
     <script type="module" src="./rapidoc-min.js"></script>
+    <script type="text/javascript">
+        // Show redoc if on mobile. Rapidoc isn't very responsive
+        if (screen.width <= 699) {
+        document.location = "redoc/index.html";
+        }
+    </script>
     <title>Pharmacy API Documentation</title>
 </head>
 <body>
