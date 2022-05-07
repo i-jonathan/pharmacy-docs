@@ -776,6 +776,174 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  # Order endpoints
+  /order:
+    post:
+      tags:
+        - order
+      summary: Create a new order
+      description: Submit order details for creation
+      security:
+        - token: []
+      requestBody:
+        description: Body for order creation
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+        required: true
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        400:
+          description:  Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    get:
+      tags:
+        - order
+      summary: Get all Orders
+      description: Fetch all Orders
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+  /order/{slug}:
+    parameters:
+      - name: slug
+        in: path
+        description: slug of order to be interacted with
+        required: true
+        schema:
+          type: string
+    
+    get:
+      tags:
+        - order
+      description: Get order by slug
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    put:
+      tags:
+        - order
+      description: Update a order
+      requestBody:
+        description: Content to update order with
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    delete:
+      tags:
+        - order
+      description: Delete a order
+      summary: Delete a order with specified slug
+      responses:
+        204:
+          description: Deleted Successfully
+        401:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     ErrorResponse:
