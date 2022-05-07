@@ -26,6 +26,8 @@ tags:
     description: You know what this is sha
   - name: payment-method
     description: this again?
+  - name: return
+    description: urgh. Endpoints for returning items
   - name: sales
     description: operations dealing with sales or so.
   - name: reports
@@ -1100,6 +1102,174 @@ paths:
         - payment-method
       description: Delete a payment-method
       summary: Delete a payment-method with specified slug
+      responses:
+        204:
+          description: Deleted Successfully
+        401:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # Return Endpoints
+  /return:
+    post:
+      tags:
+        - return
+      summary: Create a new return
+      description: Submit return details for creation
+      security:
+        - token: []
+      requestBody:
+        description: Body for return creation
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Return"
+        required: true
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Return"
+        400:
+          description:  Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    get:
+      tags:
+        - return
+      summary: Get all Returns
+      description: Fetch all Returns
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Return"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+  /return/{slug}:
+    parameters:
+      - name: slug
+        in: path
+        description: slug of return to be interacted with
+        required: true
+        schema:
+          type: string
+    
+    get:
+      tags:
+        - return
+      description: Get return by slug
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Return"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    put:
+      tags:
+        - return
+      description: Update a return
+      requestBody:
+        description: Content to update return with
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Return"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Return"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    delete:
+      tags:
+        - return
+      description: Delete a return
+      summary: Delete a return with specified slug
       responses:
         204:
           description: Deleted Successfully
