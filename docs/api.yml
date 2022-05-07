@@ -22,6 +22,8 @@ tags:
     description: Yada yada for products
   - name: supplier
     description: Supplier yada yada
+  - name: order
+    description: You know what this is sha
   - name: sales
     description: operations dealing with sales or so.
   - name: reports
