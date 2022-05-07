@@ -16,10 +16,12 @@ tags:
     description: Operations with regards to User accounts
   - name: inventory
     description: Group of stuff for inventory
-  - name: product
-    description: Yada yada for products
   - name: category
     description: Operations for category.
+  - name: product
+    description: Yada yada for products
+  - name: supplier
+    description: Supplier yada yada
   - name: sales
     description: operations dealing with sales or so.
   - name: reports
@@ -438,6 +440,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  # Product endpoints
   /product:
     post:
       tags:
@@ -589,6 +592,174 @@ paths:
         - product
       description: Delete a product
       summary: Delete a product with specified slug
+      responses:
+        204:
+          description: Deleted Successfully
+        401:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # Supplier endpoints
+  /supplier:
+    post:
+      tags:
+        - supplier
+      summary: Create a new supplier
+      description: Submit supplier details for creation
+      security:
+        - token: []
+      requestBody:
+        description: Body for supplier creation
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Supplier"
+        required: true
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplier"
+        400:
+          description:  Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    get:
+      tags:
+        - supplier
+      summary: Get all Suppliers
+      description: Fetch all Suppliers
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Supplier"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+  /supplier/{slug}:
+    parameters:
+      - name: slug
+        in: path
+        description: slug of supplier to be interacted with
+        required: true
+        schema:
+          type: string
+    
+    get:
+      tags:
+        - supplier
+      description: Get supplier by slug
+      responses:
+        200:
+          description: Status OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplier"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    put:
+      tags:
+        - supplier
+      description: Update a supplier
+      requestBody:
+        description: Content to update supplier with
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Supplier"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplier"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    delete:
+      tags:
+        - supplier
+      description: Delete a supplier
+      summary: Delete a supplier with specified slug
       responses:
         204:
           description: Deleted Successfully
@@ -798,8 +969,6 @@ components:
           $ref: "#/components/schemas/Order"
         created_by:
           $ref: "#/components/schemas/User"
-
-
 
   securitySchemes:
     token:
