@@ -1308,8 +1308,6 @@ components:
           type: integer
         name:
           type: string
-        created_by:
-          $ref: "#/components/schemas/User"
 
     User:
       type: object
